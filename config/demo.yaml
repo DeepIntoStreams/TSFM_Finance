@@ -1,0 +1,9 @@
+﻿chronos:
+  checkpoint: amazon/chronos-t5-mini
+  prediction_length: 14
+  num_samples: 20
+timesfm:
+  checkpoint: google/timesfm-1.0-200m-pytorch
+  prediction_length: 14
+  past_length: 128
+  horizon_len: 128

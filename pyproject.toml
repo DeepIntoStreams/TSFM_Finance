@@ -1,0 +1,22 @@
+﻿[project]
+name = "foundation-models-for-finance"
+version = "0.1.0"
+description = "Chronos and TimesFM demo loaders with Hugging Face checkpoints"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "chronos-forecasting>=1.5.0,<1.6",
+  "timesfm>=1.2.0,<1.3",
+  "jax>=0.4.30,<0.5",
+  "jaxlib>=0.4.30,<0.5",
+  "numpy>=1.26,<1.27",
+  "pandas>=2.1,<2.2",
+  "ipykernel>=6.29,<7",
+  "matplotlib>=3.9,<4",
+  "pyyaml>=6,<7",
+  "rich>=13.7,<14"
+]
+
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
