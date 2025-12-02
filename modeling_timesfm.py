@@ -27,6 +27,7 @@ class TimesFMConfig(PretrainedConfig):
         patch_len=128,
         input_patch_len=32,
         output_patch_len=128,
+        model_dims=1280,  # 添加 model_dims 参数
         use_positional_embedding=True,
         quantiles=None,
         **kwargs
@@ -43,6 +44,7 @@ class TimesFMConfig(PretrainedConfig):
         self.patch_len = patch_len
         self.input_patch_len = input_patch_len
         self.output_patch_len = output_patch_len
+        self.model_dims = model_dims
         self.use_positional_embedding = use_positional_embedding
         self.quantiles = quantiles if quantiles is not None else [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 
@@ -68,6 +70,7 @@ class TimesFMForHF(PreTrainedModel):
             hidden_size=config.hidden_size,
             intermediate_size=config.intermediate_size,
             patch_len=config.patch_len,
+            model_dims=config.model_dims,  # 添加 model_dims
             
             # 时间序列参数
             horizon_len=config.horizon_len,

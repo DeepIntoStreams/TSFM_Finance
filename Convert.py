@@ -112,6 +112,10 @@ for year in range(2000, 2024):
         intermediate_size=cfg.intermediate_size,
         horizon_len=hparams.horizon_len,
         context_len=hparams.context_len,
+        patch_len=cfg.patch_len,
+        input_patch_len=hparams.input_patch_len,
+        output_patch_len=hparams.output_patch_len,
+        model_dims=getattr(cfg, 'model_dims', 1280),
     )
 
     hf_model = TimesFMForHF(hf_config, decoder).to(device)
