@@ -1,4 +1,4 @@
-﻿[project]
+[project]
 name = "foundation-models-for-finance"
 version = "0.1.0"
 description = "Chronos and TimesFM demo loaders with Hugging Face checkpoints"
@@ -20,3 +20,7 @@ dependencies = [
 [build-system]
 requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["foundation_models_for_finance*"]

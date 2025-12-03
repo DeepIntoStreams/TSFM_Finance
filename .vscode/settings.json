@@ -1,0 +1,16 @@
+{
+  "terminal.integrated.profiles.windows": {
+    "Anaconda PowerShell": {
+      "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "args": [
+        "-ExecutionPolicy",
+        "ByPass",
+        "-NoExit",
+        "-Command",
+        "& 'C:\\Users\\weiguan\\miniconda3\\shell\\condabin\\conda-hook.ps1' ; conda activate 'C:\\Users\\weiguan\\miniconda3'"
+      ],
+      "icon": "terminal-powershell"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "Anaconda PowerShell"
+}
