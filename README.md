@@ -1,4 +1,4 @@
-﻿# Foundation Models for Finance
+﻿# Time Series Foundation Models for Finance
 
 Sample workflows to load Amazon Chronos 1.x and Google TimesFM checkpoints that are published on Hugging Face. The repo favors short, explicit instructions so users can copy the environment, download weights, and run the demos immediately.
 
