@@ -3,3 +3,4 @@ PROJECT_STYLE.md
 *.pyc.*
 *pyc
 checkpoints/
+*.egg-info/

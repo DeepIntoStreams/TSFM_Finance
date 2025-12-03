@@ -18,7 +18,6 @@ Sample workflows to load Amazon Chronos 1.x and Google TimesFM checkpoints that 
 ```
 .
 ├── codex.md                 # working plan / status notes
-├── config/
 ├── data/
 │   └── two_stocks_excess_returns.csv
 ├── notebooks/
@@ -33,12 +32,12 @@ Sample workflows to load Amazon Chronos 1.x and Google TimesFM checkpoints that 
 `two_stocks_excess_returns.csv` is a tiny daily-frequency example that will be documented in the README once the loaders are wired up. All future datasets follow the `<dataset>_<freq>.csv` convention from `PROJECT_STYLE.md`.
 
 ## Working surfaces
-- `python scripts/validate_env.py`: light-weight smoke test that only loads the checkpoints defined in `config/demo.yaml`.
-- `notebooks/model_walkthrough.ipynb`: interactive workflow that reads `data/two_stocks_excess_returns.csv`, keeps the final `prediction_length` rows as ground truth, and produces Chronos/TimesFM forecasts for comparison or plotting. Adjust `config/demo.yaml` to point to different checkpoints or datasets, then re-run the notebook cells.
+- `python scripts/validate_env.py`: light-weight smoke test that loads Chronos (`amazon/chronos-t5-mini`) and TimesFM (`google/timesfm-1.0-200m-pytorch`) using built-in settings. Pass `--config path/to/custom.yaml` if you want to override those defaults.
+- `notebooks/model_walkthrough.ipynb`: interactive workflow that reads `data/two_stocks_excess_returns.csv`, keeps the final `prediction_length` rows as ground truth, and produces Chronos/TimesFM forecasts for comparison or plotting. Update the notebook cells (for example, the TimesFM loader arguments) to experiment with different checkpoints or datasets, then rerun the cells.
 
 ## Hugging Face checkpoints
-- Chronos defaults to `amazon/chronos-t5-mini` to keep downloads small. Replace the checkpoint value in `config/demo.yaml` with your own Chronos 1.x release name (e.g., `amazon/chronos-t5-small`).
-- TimesFM defaults to `google/timesfm-1.0-200m-pytorch`. Replace the config entry with another TimesFM repo slug as needed.
+- Chronos defaults to `amazon/chronos-t5-mini` to keep downloads small. Provide a custom YAML file to `scripts/validate_env.py --config` or edit the notebook to load another Chronos 1.x release (e.g., `amazon/chronos-t5-small`).
+- TimesFM defaults to `google/timesfm-1.0-200m-pytorch`. Override it via `--config` for the validation script or tweak the notebook's loader call to try another repo slug.
 
 All tooling respects `HF_HOME` for caching and reads `HF_TOKEN` (if set) for gated models.
 

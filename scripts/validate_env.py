@@ -12,16 +12,35 @@ import yaml
 from chronos import ChronosPipeline
 from timesfm import TimesFm, TimesFmCheckpoint, TimesFmHparams
 
-DEFAULT_CONFIG = Path(__file__).resolve().parents[1] / "config" / "demo.yaml"
+DEFAULT_CHECKPOINTS = {
+    "chronos": {
+        "checkpoint": "amazon/chronos-t5-mini",
+        "prediction_length": 14,
+        "num_samples": 20,
+    },
+    "timesfm": {
+        "checkpoint": "google/timesfm-1.0-200m-pytorch",
+        "prediction_length": 14,
+        "past_length": 128,
+        "horizon_len": 128,
+    },
+}
 
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Verify Chronos and TimesFM can be imported.")
-    parser.add_argument("--config", default=str(DEFAULT_CONFIG), help="Path to the shared YAML config.")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=None,
+        help="Optional YAML path to override the built-in checkpoint configuration.",
+    )
     return parser.parse_args()
 
 
-def _load_config(path: Path) -> Dict[str, Dict]:
+def _load_config(path: Path | None) -> Dict[str, Dict]:
+    if path is None:
+        return DEFAULT_CHECKPOINTS
     with path.open("r", encoding="utf-8") as handle:
         return yaml.safe_load(handle)
 
@@ -54,7 +73,7 @@ def _check_timesfm(config: Dict[str, Dict]) -> Dict[str, str]:
 
 def main() -> None:
     args = _parse_args()
-    config = _load_config(Path(args.config))
+    config = _load_config(args.config)
     summaries: Dict[str, Dict] = {}
     failures = []
 
