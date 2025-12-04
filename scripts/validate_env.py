@@ -2,13 +2,10 @@
 
 from __future__ import annotations
 
-import argparse
 import json
 import sys
-from pathlib import Path
 from typing import Dict
 
-import yaml
 from chronos import ChronosPipeline
 from timesfm import TimesFm, TimesFmCheckpoint, TimesFmHparams
 
@@ -25,24 +22,6 @@ DEFAULT_CHECKPOINTS = {
         "horizon_len": 128,
     },
 }
-
-
-def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Verify Chronos and TimesFM can be imported.")
-    parser.add_argument(
-        "--config",
-        type=Path,
-        default=None,
-        help="Optional YAML path to override the built-in checkpoint configuration.",
-    )
-    return parser.parse_args()
-
-
-def _load_config(path: Path | None) -> Dict[str, Dict]:
-    if path is None:
-        return DEFAULT_CHECKPOINTS
-    with path.open("r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle)
 
 
 def _check_chronos(config: Dict[str, Dict]) -> Dict[str, str]:
@@ -72,8 +51,7 @@ def _check_timesfm(config: Dict[str, Dict]) -> Dict[str, str]:
 
 
 def main() -> None:
-    args = _parse_args()
-    config = _load_config(args.config)
+    config = DEFAULT_CHECKPOINTS
     summaries: Dict[str, Dict] = {}
     failures = []
 

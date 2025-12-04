@@ -4,3 +4,4 @@ PROJECT_STYLE.md
 *pyc
 checkpoints/
 *.egg-info/
+.vscode/
