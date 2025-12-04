@@ -4,7 +4,9 @@
 [![Website - FinText.ai](https://img.shields.io/badge/Website-FinText.ai-0A66C2?logo=google-chrome&logoColor=white)](https://fintext.ai)
 [![Hugging Face - FinText](https://img.shields.io/badge/Hugging%20Face-FinText-f77f00?logo=huggingface&logoColor=white)](https://huggingface.co/FinText)
 
-
+<p align="center">
+  <img src="https://fintext.ai/FinText_Github.png" alt="Logo" width="200"/>
+</p>
 
 Sample workflows to load Amazon Chronos 1.x and Google TimesFM checkpoints that are published on Hugging Face. The repo favors short, explicit instructions so users can copy the environment, download weights, and run the demos immediately.
 
