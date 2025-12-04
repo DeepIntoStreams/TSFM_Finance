@@ -1,5 +1,6 @@
 ﻿# Time Series Foundation Models for Finance
 [![arXiv](https://img.shields.io/badge/arXiv-2511.18578-b31b1b?logo=arxiv&logoColor=white)](https://www.arxiv.org/abs/2511.18578)
+[![Website - FinText.ai](https://img.shields.io/badge/Website-FinText.ai-0A66C2?logo=google-chrome&logoColor=white)](https://fintext.ai)
 [![Hugging Face - FinText](https://img.shields.io/badge/Hugging%20Face-FinText-f77f00?logo=huggingface&logoColor=white)](https://huggingface.co/FinText)
 [![SSRN](https://img.shields.io/badge/SSRN-5770562-1a5dab?logo=ssrn&logoColor=white)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5770562)
 
