@@ -31,7 +31,7 @@ With the following steps, user shall be able to build an envrionment that allows
 
 ## Working surfaces
 - `python scripts/validate_env.py`: light-weight smoke test that loads Chronos (`amazon/chronos-t5-mini`) and TimesFM (`google/timesfm-1.0-200m-pytorch`) using the baked-in defaults. Edit the script if you want to change checkpoints.
-- `notebooks/model_walkthrough.ipynb`: interactive workflow that reads `data/two_stocks_excess_returns.csv`, keeps the final `prediction_length` rows as ground truth, and produces Chronos/TimesFM forecasts for comparison or plotting. Update the notebook cells (for example, the TimesFM loader arguments) to experiment with different checkpoints or datasets, then rerun the cells.
+- `notebooks/predict-with-x.ipynb`: interactive workflow that reads `data/two_stocks_excess_returns.csv`, keeps the final `prediction_length` rows as ground truth, and produces Chronos/TimesFM forecasts for comparison or plotting. Update the notebook cells (for example, the TimesFM loader arguments) to experiment with different checkpoints or datasets, then rerun the cells.
 
 ## Hugging Face checkpoints
 - Chronos defaults to `amazon/chronos-t5-mini` to keep downloads small. Edit the validation script or notebook to load another Chronos 1.x release (e.g., `amazon/chronos-t5-small`).
