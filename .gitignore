@@ -5,3 +5,4 @@ PROJECT_STYLE.md
 checkpoints/
 *.egg-info/
 .vscode/
+FinText_extra_models/

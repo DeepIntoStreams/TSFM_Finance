@@ -1,5 +1,6 @@
 import os
 from collections import OrderedDict
+from pathlib import Path
 from typing import Dict
 
 import torch
@@ -29,15 +30,8 @@ MODEL_CONFIGS: Dict[str, Dict[str, int]] = {
 }
 
 
-def load_timesfm_from_hf(repo_id: str, model_size: str = "20M", prediction_length: int = 1) -> TimesFm:
-    """
-    Load a TimesFM model from a Hugging Face repo and return a ready-to-use model.
-
-    Args:
-        repo_id: Hugging Face repository that hosts the `model.safetensors` file.
-        model_size: Either '8M' or '20M'. Determines the architecture that is
-            applied before loading the checkpoint.
-    """
+def _init_timesfm(model_size: str, prediction_length: int) -> TimesFm:
+    """Instantiate the base TimesFM class with large defaults before patching."""
     size_key = model_size.upper()
     if size_key not in MODEL_CONFIGS:
         raise ValueError(f"Unsupported model_size '{model_size}'. Choose from {list(MODEL_CONFIGS)}.")
@@ -68,22 +62,73 @@ def load_timesfm_from_hf(repo_id: str, model_size: str = "20M", prediction_lengt
     for key in decoder_keys:
         setattr(cfg, key, cfg_overrides[key])
 
-    weights_path = hf_hub_download(repo_id=repo_id, filename="model.safetensors")
-    print(f"HF weights downloaded from: {weights_path}")
+    return model, cfg, device
 
+
+def _load_state_dict(weights_path: Path) -> OrderedDict:
     state_dict = load_safetensors(weights_path)
     clean_state_dict = OrderedDict(
         (k.replace("module.", "", 1).replace("model.", "", 1), v)
         for k, v in state_dict.items()
     )
+    return clean_state_dict
 
+
+def _finalize_model(model: TimesFm, cfg, state_dict: OrderedDict, device: torch.device) -> TimesFm:
     decoder = PatchedTimeSeriesDecoder(cfg).to(device)
-    decoder.load_state_dict(clean_state_dict, strict=True)
+    decoder.load_state_dict(state_dict, strict=True)
 
     model._model = decoder
     model._model.to(model._device)
     model._model.eval()
     return model
+
+
+def _resolve_weights_path(source: str) -> Path:
+    """
+    Return a path to the `model.safetensors` file. If `source` exists locally,
+    use it directly (folder or file). Otherwise assume it is a repo_id.
+    """
+    local_path = Path(source)
+    if local_path.exists():
+        if local_path.is_dir():
+            candidate = local_path / "model.safetensors"
+        else:
+            candidate = local_path
+
+        if not candidate.is_file():
+            raise FileNotFoundError(f"Could not find 'model.safetensors' under {local_path}.")
+
+        print(f"TimesFM weights loaded from local path: {candidate}")
+        return candidate
+
+    weights_path = Path(hf_hub_download(repo_id=source, filename="model.safetensors"))
+    print(f"HF weights downloaded from: {weights_path}")
+    return weights_path
+
+
+def load_timesfm(source: str, model_size: str = "20M", prediction_length: int = 1) -> TimesFm:
+    """
+    Load a TimesFM model either from a Hugging Face repo or a local path.
+
+    Args:
+        source: Hugging Face repo_id or a local directory/file that contains `model.safetensors`.
+        model_size: Determines which decoder config overrides to apply.
+    """
+    model, cfg, device = _init_timesfm(model_size, prediction_length)
+    weights_path = _resolve_weights_path(source)
+    state_dict = _load_state_dict(weights_path)
+    return _finalize_model(model, cfg, state_dict, device)
+
+
+def load_timesfm_from_hf(repo_id: str, model_size: str = "20M", prediction_length: int = 1) -> TimesFm:
+    """Backwards-compatible helper that forces the Hugging Face code path."""
+    return load_timesfm(source=repo_id, model_size=model_size, prediction_length=prediction_length)
+
+
+def load_timesfm_from_local(path: str, model_size: str = "20M", prediction_length: int = 1) -> TimesFm:
+    """Load a TimesFM model from a local directory or `model.safetensors` file."""
+    return load_timesfm(source=path, model_size=model_size, prediction_length=prediction_length)
 
 
 if __name__ == "__main__":
