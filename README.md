@@ -12,15 +12,16 @@
        style="pointer-events: none;" />
 </p>
 
-
-Sample workflows to load Amazon Chronos 1.x and Google TimesFM checkpoints that are published on Hugging Face. The repo favors short, explicit instructions so users can copy the environment, download weights, and run the demos immediately.
+This repository is the official GitHub implementation of the paper “Re(visiting) Time Series Foundation Models in Finance” by Eghbal Rahimikia, Hao Ni
+and Weiguan Wang. It provides minimal, reproducible workflows for loading and runing Amazon Chronos 1.x and Google TimesFM checkpoints that are published on Hugging Face. The repo favors short, explicit instructions so users can copy the environment, download weights, and run the demos immediately.
 
 ## Quickstart (uv)
 With the following steps, user shall be able to build an envrionment that allows to load both Chronos 1.x and TimesFM 1.x models.
 1. Create virtual environment with `uv venv --python 3.11 .venv`
 2. Activate the environment (`.venv\\Scripts\\activate` on PowerShell, `source .venv/bin/activate` on bash).
 3. `uv pip sync requirements.txt`
-4. Run `python scripts/validate_env.py` to confirm the Chronos and TimesFM checkpoints load correctly, then open `notebooks/predict-with-chronos1.ipynb` or `predict-with-timesfm1` to load data and generate forecasts.
+4. Run `python scripts/validate_env.py` to confirm the Chronos and TimesFM checkpoints load correctly. 
+5. Open `notebooks/predict-with-chronos1.ipynb` or `predict-with-timesfm1` to load data and generate forecasts using the corresponding models.
 
 
 ## Repository layout
@@ -38,7 +39,8 @@ With the following steps, user shall be able to build an envrionment that allows
 
 `two_stocks_excess_returns.csv` is a tiny daily-frequency example that contains daily excess returns for Microsoft and Apple stocks.
 
-## Working surfaces
+
+## Primary entry point
 - `python scripts/validate_env.py`: light-weight smoke test that loads Chronos (`amazon/chronos-t5-mini`) and TimesFM (`google/timesfm-1.0-200m-pytorch`) using the baked-in defaults. Edit the script if you want to change checkpoints.
 - `notebooks/predict-with-x.ipynb`: interactive workflow that reads `data/two_stocks_excess_returns.csv`, keeps the final `prediction_length` rows as ground truth, and produces Chronos/TimesFM forecasts for comparison or plotting. Update the notebook cells (for example, the TimesFM loader arguments) to experiment with different checkpoints or datasets, then rerun the cells.
 
