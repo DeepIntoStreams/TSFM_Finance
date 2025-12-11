@@ -22,7 +22,7 @@ With the following steps, user shall be able to build an envrionment that allows
 2. Activate the environment (`.venv\\Scripts\\activate` on PowerShell, `source .venv/bin/activate` on bash).
 3. `uv pip sync requirements.txt`
 4. Run `python scripts/validate_env.py` to confirm the Chronos and TimesFM checkpoints load correctly. 
-5. Open `notebooks/predict-with-chronos1.ipynb` or `predict-with-timesfm1` to load data and generate forecasts using the corresponding models.
+5. Open `notebooks/predict-with-chronos1.ipynb` or `predict-with-timesfm1` (in VS Code with jupyter plugin or use "jupyter notebook" in command line tool) to load data and generate forecasts using the corresponding models.
 
 
 ## Repository layout
